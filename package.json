@@ -1,0 +1,21 @@
+{
+  "name": "mishuk",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon server",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "madvert",
+  "license": "ISC",
+  "dependencies": {
+    "fastify": "^3.9.2",
+    "fastify-cookie": "^5.0.2",
+    "fastify-cors": "^5.1.0",
+    "fastify-jwt": "^2.2.0",
+    "mongoose": "^5.11.8",
+    "mongoose-auto-increment": "^5.0.1",
+    "nodemon": "^2.0.6"
+  }
+}
