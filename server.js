@@ -48,7 +48,7 @@ fastify.decorate("jwtVerifyUser", async (request, reply) => {
 
 const start = async() =>{
     try{
-        await fastify.listen(PORT,"localhost")
+        await fastify.listen(PORT,"0.0.0.0")
     }
     catch(err){
         console.log(err)
