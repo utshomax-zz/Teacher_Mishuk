@@ -6,17 +6,7 @@ async function AuthRouter(fastify){
                 reply.send({'status':4,'msg':'request error'})
                 return
             }
-            var token = req.params.token;
-            var data;
-            if (token.length > 0) {
-                data = {
-                    token:token
-                }
-            } else {
-                reply.send({'msg':'length error'})
-                return
-            }
-            const result= await adminData.findOne(data, function(err, adminData) {
+            const result= await adminData.findOne({token:req.params.token}, function(err, adminData) {
       
                 if (err) {
                     reply.send({'msg':'db error'})
@@ -25,16 +15,17 @@ async function AuthRouter(fastify){
                 return adminData
             });
             if(result){
-                const jtoken = await reply.jwtSign({
+                const token = await reply.jwtSign({
                     name: result.name,
                     type: result.type,
-                    token:result.token
+                    token: result.token
                   })
                 
-                reply.setCookie('token', jtoken, {
-                        
+                reply.setCookie('token', token, {
+                        domain:'teachermishuk.herokuapp.com',
                         path: '/',
-                        
+                        sameSite:'none',
+                        secure:true,
                         httpOnly:true,
                         maxAge:3600,
                       })

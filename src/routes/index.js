@@ -2,7 +2,7 @@ const controllers = require('../controllers/controllers')
 
 const route =[
     {
-        method:'PUT',
+        method:'POST',
         url:'/api/addCount',
         handler: controllers.addCount
     },
