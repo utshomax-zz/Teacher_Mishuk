@@ -18,7 +18,6 @@ async function AuthRouter(fastify){
                 const token = await reply.jwtSign({
                     name: result.name,
                     type: result.type,
-                    token: result.token
                   })
                 
                 reply.setCookie('token', token, {
