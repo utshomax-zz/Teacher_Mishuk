@@ -8,7 +8,7 @@ const route =[
     },
     {
         method:'GET',
-        url:'/api/count',
+        url:'/api/counts',
         handler: controllers.count
     },
 ]

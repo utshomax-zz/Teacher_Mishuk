@@ -1,12 +1,11 @@
 
 const fastify = require('fastify')({
-    logger:true
+  logger:true
 })
-fastify.register(require('fastify-cookie'))
 
 fastify.register(require('fastify-cors'),{
-    origin:['http://127.0.0.1:5500','http://127.0.0.1:5501','http://localhost:5500'],
-    credentials:'include',
+  origin:['http://127.0.0.1:5500','http://127.0.0.1:5501',"http://chem.madvert.tech","https://chem.madvert.tech"],
+  credentials:'include',
 })
 
 fastify.register(require('./src/routes/authRouter'))
@@ -20,40 +19,37 @@ mongose.connect(MONGODB_URI,{useNewUrlParser: true, useUnifiedTopology: true,use
 .catch(err => console.log(err))
 
 fastify.get('/',async(req,rep) => {
-    return {Hello : 'World'}
+  return {Hello : 'World'}
 })
 const jwt = require('fastify-jwt')
 
 fastify.register(jwt, {
-  secret: process.env.JWT_SECRET || 'Mad@vert__2020',
-  cookie: {
-    cookieName: 'token'
-  }
+secret: process.env.JWT_SECRET || 'Mad@vert__2020',
 })
 
 fastify.decorate("jwtVerifyUser", async (request, reply) => {
-    try {
-      await request.jwtVerify()
-    } catch (err) {
-      reply.send(err)
-    }
-  })
-  .after(() => {
-    routes.forEach(route => {
-      route['preHandler']=[fastify.jwtVerifyUser];
-      fastify.route(route)
+  try {
+    await request.jwtVerify()
+  } catch (err) {
+    reply.send(err)
+  }
+})
+.after(() => {
+  routes.forEach(route => {
+    route['preHandler']=[fastify.jwtVerifyUser];
+    fastify.route(route)
+
 });
 })
 
 
 const start = async() =>{
-    try{
-        await fastify.listen(PORT,"0.0.0.0")
-    }
-    catch(err){
-        console.log(err)
-        process.exit(1)
-    }
+  try{
+      await fastify.listen(PORT,"0.0.0.0")
+  }
+  catch(err){
+      console.log(err)
+      process.exit(1)
+  }
 }
-//fastify.register(require('./src/controllers/notificationController'))
 start()
